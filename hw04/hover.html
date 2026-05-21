@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>D3.js scatter plot with hover</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        #tooltip {
+            position: absolute;
+            text-align: center;
+            width: 120px;       
+            height: auto;      
+            padding: 8px;
+            font: 12px sans-serif;
+            background: white;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        svg {
+            display: block;
+        }
+
+        .axis-label {
+            fill: #000;
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        // 設定 SVG 大小
+        var margin = {top: 20, right: 30, bottom: 50, left: 60},
+            width = 1080 - margin.left - margin.right,
+            height = 580 - margin.top - margin.bottom;
+
+        // 加入 svg 到 body
+        d3.select("body").style("margin", "0");
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", "100%")  // 使用百分比讓它填滿 iframe
+            .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+        var tooltip = d3.select("body").append("div")
+            .attr("id", "tooltip")
+            .style("opacity", 0);
+
+        // 設定為自己字的檔名
+        var myImg = "113590450.png";
+        
+        d3.csv("results.csv").then(function(data) {
+
+            // 設定x軸比例尺
+            var x = d3.scaleLinear()
+                .domain([0.3, 1]) // ssim
+                .range([ 0, width ]);
+
+            // hover.html
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .append("text")
+                .attr("class", "axis-label")
+                .attr("x", width) 
+                .attr("y", -40) // 改為正 40，讓 SSIM 字樣出現在軸線下方
+                .style("text-anchor", "end")
+                .text("SSIM");
+
+            // 設定y軸比例尺
+            var y = d3.scaleLinear()
+                .domain([0, 0.7]) // lpips
+                .range([ height, 0]);
+
+
+            // 加入Y軸以及標籤
+            svg.append("g")
+                .call(d3.axisLeft(y))
+            // 加入y軸標籤
+                .append("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-90)") // 旋轉標籤
+                .attr("y", 30) // 在Y軸線左方一點的位置
+                .attr("dy", ".71em") // 微調位置
+                .style("text-anchor", "end") // 文本對齊方式
+                .text("LPIPS");
+
+            var filteredData = data.filter(function(d) {
+                return d.SSIM >= 0 && d.SSIM <=1 && d.LPIPS >=0 && d.LPIPS <= 1;
+            });
+
+            var node = svg.append('g')
+                .selectAll("g.node")
+                .data(filteredData)
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) { return "translate(" + x(d.SSIM) + "," + y(d.LPIPS) + ")"; })
+                .style("cursor", "pointer");
+
+            // 畫正方形
+            var rectSize = 36; 
+            node.append("rect")
+                .attr("width", rectSize)
+                .attr("height", rectSize)
+                .attr("x", -rectSize / 2) // 往左平移一半以置中
+                .attr("y", -rectSize / 2) // 往上平移一半以置中
+                .style("fill", "rgba(0,0,0,0)")  // 設定為透明填色，確保能觸發滑鼠事件
+                .style("stroke", function(d) {
+                    // 設定外框顏色規則：符合條件為紅框，不符合為綠框
+                    return d.Student === myImg ? "#ff0000" : "#187C19"; 
+                })
+                .style("stroke-width", "2px"); // 設定外框粗度
+
+            // 加入圖片
+            node.append("image")
+                .attr("xlink:href", function(d) { 
+                    return "img/" + d.Student; 
+                }) 
+                .attr("x", -17)
+                .attr("y", -17) 
+                .attr("width", 34) 
+                .attr("height", 34)
+                .style("pointer-events", "none");
+
+            // Tooltip 綁定到整個 node 群組上
+            node.on("mouseover", function(d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    
+                    tooltip.html(
+                        "<div style='margin-bottom:5px; font-weight:bold; font-size: 1.1em;'>" + d.Student + "</div>" +
+                        "<img src='img/" + d.Student + "' alt='Handwriting' style='width: 100%; height: auto; border: 1px solid #ccc;'>"
+                    )
+                    var tooltipNode = document.getElementById("tooltip");
+                    var tooltipWidth = tooltipNode.offsetWidth;
+                    var tooltipHeight = tooltipNode.offsetHeight;
+
+                    tooltip
+                        .style("left", (d3.event.pageX - tooltipWidth - 8) + "px") // 往左位移
+                        .style("top", (d3.event.pageY - tooltipHeight - 8) + "px"); // 往上位移
+                })
+                .on("mouseout", function(d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+            
+        });
+
+    </script>
+</body>
+</html>
