@@ -153,7 +153,8 @@
   <!-- ------------------------------------------------>
   <div class="row hw12">
     <div class="col-md-12 twenty">
-      心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。
+      本次作業是我第一次接觸文生圖的初步應用，使用的工具是目前個人使用功能相當完整的 ComfyUI。ComfyUI 採用節點式操作方式，讓使用者可以透過連接不同模組，逐步建立影像生成的工作流程。相較於單純輸入提示詞後等待結果，這樣的操作方式讓我更清楚理解模型在生成圖像時的流程與邏輯。雖然一開始對節點連接與參數設定不太熟悉，但在實際操作後，逐漸掌握了基本使用方式，也覺得整個過程很有趣。最後，我依照主題成功生成出與芙莉蓮相關的圖像，讓我對文生圖技術有了更具體的認識。
+
     </div>
   </div>
 
@@ -169,22 +170,22 @@
         </tr>
         <tr>
           <td rowspan="4" id="myTotal"></td>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox1"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox1"checked></td>
           <td id='m1'>4</td>
           <td>Simple baseline - 描述</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox2"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox2"checked></td>
           <td id='m2'>4</td>
           <td>Medium baseline - 描述</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox3"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox3"checked></td>
           <td id='m3'>2</td>
           <td>Strong baseline - 描述</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox4" checked></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox4" ></td>
           <td id='m4'>-10</td>
           <td>沒有寫100字心得</td>
         </tr>
@@ -192,13 +193,55 @@
       </table>
     </div>
   </div>
+  <!-- ------------------------------------------------>
+  <div class="row hw12">
+    <div class="col-md-12 twenty" style="background-color:#00AC48;">    
+      <figure>
+        <figcaption>ComfyUI+工作流</figcaption>
+            <img src="1.png" width="100%"/>
+        </figure>
+    </div>
+  </div>
 
   <!-- ------------------------------------------------>
-  <div class="row hw12 bottomrow">
-    <div class="col-md-12 twenty">
-      <video id="video1" style="width:100%;max-width:100%;" controls="">
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-      </video>
+  <div class="row hw12">
+    <div class="col-md-12 twenty" style="background-color:#ff0000;"> 
+      <figure>
+        <figcaption>完成芙莉蓮、欣梅爾Checkpoint文生圖</figcaption>
+        <a href="https://civitai.com/models/820208/obsession-illustrious-xl">Checkpoint連結</a>
+        <p>1024 * 1280</p>
+        <p>Outside, upper body, eye contact, light blue hair, cape, capelet, earrings, dappled sunlight, day, hand on another's head, kesyeru, sousou no frieren, very awa, anime screencap, masterpiece, best quality, 1 boy, 1 girl, frieren, himmel "sousou no frieren,"
+          &lt;,
+        </p>
+        <p>nsfw, lowres, bad anatomy, bad hands, bad fingers, missing fingers, extra fingers, extra digit, fewer digits, malformed hands, deformed body, bad proportions, mutated hands, poorly drawn hands, poorly drawn face, cropped, out of frame, worst quality, low quality, normal quality, jpeg artifacts, blurry, text, error, signature, watermark, username, artist name
+
+        </p>
+        <img src="2.png" width="100%"/>
+      </figure>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------>
+  <div class="row hw12">
+    <div class="col-md-12 twenty" style="background-color:#7030a0;">    
+      <figure>
+        <figcaption>替換Ckeckpoint、LoRA完成芙莉蓮、欣梅爾文生圖</figcaption>
+        <a href="https://civitai.com/models/820208/obsession-illustrious-xl">Checkpoint連結</a>
+        <br>
+        <a href="https://civitai.com/models/1204563?modelVersionId=1356500">LoRA連結1</a>
+        <br>
+        <a href="https://civitai.com/models/1201355/r754496-or-shiiros-styles-or-niji">LoRA連結2</a>
+        <p>1024 * 1280</p>
+        <p>LoRA1 Strength : 0.5</p>
+        <p>LoRA2 Strength : 0.45</p>
+        <p>r17329_illu, xxx667_illu, very aesthetic, anime screencap, masterpiece, best quality, high quality, 1boy, 1girl, Frieren, Himmel (Sousou no Frieren), Sousou no Frieren, outdoors, day, dappled sunlight, upper body, eye contact, light blue hair, cape, capelet, earrings, hand on another's head, gentle atmosphere, soft lighting, emotional scene, detailed face, beautiful eyes, clean composition, [lora:r17329_illu-000015:0.45](lora:r17329_illu-000015:0.45), [lora:XXX477-000016:0.5](lora:XXX477-000016:0.5)
+
+        </p>
+        <p>nsfw,lowres,bad anatomy,bad hands,text,error,missing fingers,extra digit,fewer digits,cropped,worst quality,
+          low quality,normal quality,jpeg artifacts,signature,watermark,username,blurry,artist name,
+        </p>
+        <img src="3.png" width="100%"/>
+      </figure>
     </div>
   </div>
 
